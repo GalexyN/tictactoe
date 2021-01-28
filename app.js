@@ -27,12 +27,11 @@ setTimeout(() => {
         console.log(`Move received at ${button.parentElement.id}`);
         console.log(`stored moves player x: ${storedMovesPlayerX}`);
         console.log(`stored moves player o: ${storedMovesPlayerO}`);
+        console.log(typeof storedMovesPlayerX[0])
       }
       // check for winner
-      if (storedMovesPlayerX.length === 5 && storedMovesPlayerO.length === 4) {
-        alert('GAME DECISION: TIE - RESETTING BOARD TO PLAY AGAIN');
-        document.getElementById('reset').click();
-      }
+      findWinner(storedMovesPlayerX);
+      findWinner(storedMovesPlayerO);
     })
   })
 }, 0);
@@ -54,4 +53,37 @@ setTimeout(() => {
     console.log(`Stored Moves for Player O: ${storedMovesPlayerO}`);
 
   })
-})
+});
+
+const findWinner = (arr) => {
+  if (arr.includes('1')) {
+    if (arr.includes('2') && arr.includes('3')) {
+      announceWinner();
+    } else if (arr.includes('4') && arr.includes('7')) {
+      announceWinner();
+    } else if (arr.includes('5') && arr.includes('9')) {
+      announceWinner();
+    }
+  } else if (arr.includes('2') && arr.includes('5') && arr.includes('8')) {
+    announceWinner();
+  } else if (arr.includes('3')) {
+    if (arr.includes('5') && arr.includes('7')) {
+      announceWinner();
+    } else if (arr.includes('6') && arr.includes('9')) {
+      announceWinner();
+    }
+  } else if (arr.includes('4') && arr.includes('5') && arr.includes('6')) {
+    announceWinner();
+  } else if (arr.includes('7') && arr.includes('8') && arr.includes('9')) {
+    announceWinner();
+  } else if (storedMovesPlayerX.length === 5 && storedMovesPlayerO.length === 4) {
+    alert('GAME DECISION: TIE - RESETTING BOARD TO PLAY AGAIN');
+    document.getElementById('reset').click();
+  }
+}
+
+const announceWinner = () => {
+  alert('winner - resetting board');
+  document.getElementById('reset').click();
+  return;
+}
