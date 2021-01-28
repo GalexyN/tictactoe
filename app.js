@@ -1,17 +1,7 @@
-// create the 2 players 
-
-class Player {
-  constructor() {
-
-  }
-}
-
 // implement win conditions checks
 
 let storedMovesPlayerX = [];
 let storedMovesPlayerO = [];
-
-
 
 // adds event listener to each button to register moves
 setTimeout(() => {
@@ -20,14 +10,29 @@ setTimeout(() => {
   tiles.forEach(tile => {
     let button = tile.children[0].children[0];
     button.addEventListener('click', () => {
-      if (storedMovesPlayerX.length === storedMovesPlayerO.length) {
-        button.textContent = 'X';
-        storedMovesPlayerX.push(button.parentElement.id)
+      if (button.textContent === 'X' || button.textContent === 'O') {
+        alert('That space is already filled please choose another');
       } else {
-        button.textContent = 'O';
-        storedMovesPlayerO.push(button.parentElement.id)
+
+        if (storedMovesPlayerX.length === storedMovesPlayerO.length) {
+          button.textContent = 'X';
+          storedMovesPlayerX.push(button.parentElement.id)
+          storedMovesPlayerX.sort((a, b) => a - b);
+        } else {
+          button.textContent = 'O';
+          storedMovesPlayerO.push(button.parentElement.id);
+          storedMovesPlayerO.sort((a, b) => a - b);
+
+        }
+        console.log(`Move received at ${button.parentElement.id}`);
+        console.log(`stored moves player x: ${storedMovesPlayerX}`);
+        console.log(`stored moves player o: ${storedMovesPlayerO}`);
       }
-      console.log(`Move received at ${button.parentElement.id}`)
+      // check for winner
+      if (storedMovesPlayerX.length === 5 && storedMovesPlayerO.length === 4) {
+        alert('GAME DECISION: TIE - RESETTING BOARD TO PLAY AGAIN');
+        document.getElementById('reset').click();
+      }
     })
   })
 }, 0);
@@ -46,8 +51,7 @@ setTimeout(() => {
     console.log('Tiles have been reset...');
     console.log('Stored moves have been reset...');
     console.log(`Stored Moves for Player X: ${storedMovesPlayerX}`);
-    console.log(`Stored Moves for Player O: ${storedMovesPlayerO}`)
-
+    console.log(`Stored Moves for Player O: ${storedMovesPlayerO}`);
 
   })
 })
